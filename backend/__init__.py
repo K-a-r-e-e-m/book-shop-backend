@@ -15,7 +15,7 @@ mail = Mail()
 load_dotenv()
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../frontend/dist')  # Adjust static folder if necessary
     CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['SESSION_TYPE'] = os.getenv('SESSION_TYPE')
@@ -65,13 +65,16 @@ def create_app():
     app.register_blueprint(reset_blueprint, url_prefix='/')
     app.register_blueprint(admin_blueprint, url_prefix='/')
 
-    # Serve the React frontend for any undefined routes
+
+    # Serve the React frontend for non-API routes
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
     def serve_frontend(path):
-        if path != "" and os.path.exists(app.static_folder + '/' + path):
+        if path != '' and os.path.exists(os.path.join(app.static_folder, path)):
+            # Serve static files (e.g., JS, CSS) if they exist
             return send_from_directory(app.static_folder, path)
         else:
+            # Serve the React app's index.html for all other routes
             return send_from_directory(app.static_folder, 'index.html')
 
     with app.app_context():
