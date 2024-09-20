@@ -32,7 +32,7 @@ def reset_password_request():
     
     # Get new token for this user
     token = user.get_reset_token()
-    reset_link = f'http://localhost:5173/forgot-password/{token}'
+    reset_link = f'https://bookshop.up.railway.app/forgot-password/{token}'
     html_content = f"""
     <html>
     <head>
