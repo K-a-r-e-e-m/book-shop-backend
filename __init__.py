@@ -15,7 +15,7 @@ mail = Mail()
 load_dotenv()
 
 def create_app():
-    app = Flask(__name__, static_folder='frontend/dist', static_url_path='')
+    app = Flask(__name__)
     CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://bookshop.up.railway.app"}})
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['SESSION_TYPE'] = os.getenv('SESSION_TYPE')
@@ -65,15 +65,6 @@ def create_app():
     app.register_blueprint(reset_blueprint, url_prefix='/')
     app.register_blueprint(admin_blueprint, url_prefix='/')
 
-    @app.route('/')
-    @app.route('/<path:path>')
-    def serve_react_app(path=''):
-        # Serve index.html for root path or if path is empty
-        if path == '' or path == 'index.html':
-            return send_from_directory(app.static_folder, 'index.html')
-        # Serve other static files
-        return send_from_directory(app.static_folder, path)
-    
     with app.app_context():
         db.create_all()
         
