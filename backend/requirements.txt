@@ -1,0 +1,14 @@
+backend==0.2.4.1
+Flask==3.0.3
+Flask_Cors==5.0.0
+flask_mail==0.10.0
+flask_session==0.8.0
+flask_sqlalchemy==3.1.1
+google_auth_oauthlib==1.2.1
+pip==20.0.2
+protobuf==5.28.2
+PyJWT==2.9.0
+python-dotenv==1.0.1
+python_bcrypt==0.3.2
+Requests==2.32.3
+SQLAlchemy==2.0.35
