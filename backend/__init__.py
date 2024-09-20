@@ -65,6 +65,15 @@ def create_app():
     app.register_blueprint(reset_blueprint, url_prefix='/')
     app.register_blueprint(admin_blueprint, url_prefix='/')
 
+    # Serve the React frontend for any undefined routes
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def serve_frontend(path):
+        if path != "" and os.path.exists(app.static_folder + '/' + path):
+            return send_from_directory(app.static_folder, path)
+        else:
+            return send_from_directory(app.static_folder, 'index.html')
+
     with app.app_context():
         db.create_all()
         
