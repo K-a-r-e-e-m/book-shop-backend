@@ -33,12 +33,7 @@ class User(db.Model):
         '''
         self.fname = fname
         self.email = email
-        print(f"Original password: {password}")
-        encoded_password = password.encode('utf-8')
-        print(f"Encoded password: {encoded_password}")
-        hashed_password = bcrypt.hashpw(encoded_password, bcrypt.gensalt())
-        print(f"Hashed password: {hashed_password}")
-        self.password = hashed_password.decode('utf-8')
+        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     def check_password(self, password):
         '''Checks if the provided password matches the stored hashed password.
