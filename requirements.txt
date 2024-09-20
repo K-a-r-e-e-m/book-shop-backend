@@ -9,7 +9,7 @@ pip==20.0.2
 protobuf==5.28.2
 PyJWT==2.9.0
 python-dotenv==1.0.1
-python_bcrypt==0.3.2
+bcrypt==3.2.0
 Requests==2.32.3
 SQLAlchemy==2.0.35
 gunicorn
