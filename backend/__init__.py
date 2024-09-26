@@ -15,7 +15,8 @@ mail = Mail()
 load_dotenv()
 
 def create_app():
-    app = Flask(__name__, static_folder='../frontend/dist', static_url_path='')
+    # app = Flask(__name__, static_folder='../frontend/dist', static_url_path='')
+    app = Flask(__name__)    
     CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['SESSION_TYPE'] = os.getenv('SESSION_TYPE')
@@ -67,19 +68,19 @@ def create_app():
 
 
     
-    # Serve React's static files from the build folder
-    @app.route('/')
-    @app.route('/<path:path>')
-    def serve_react(path=None):
-        if path is None or path == 'index.html':
-            return send_from_directory(app.static_folder, 'index.html')
-        else:
-            # For everything else, serve the index.html
-            if path.startswith('static/') or '.' in path:
-                # Serve static files directly (e.g., images, css, js)
-                return send_from_directory(app.static_folder, path)
-            else:
-                return send_from_directory(app.static_folder, 'index.html')
+    # # Serve React's static files from the build folder
+    # @app.route('/')
+    # @app.route('/<path:path>')
+    # def serve_react(path=None):
+    #     if path is None or path == 'index.html':
+    #         return send_from_directory(app.static_folder, 'index.html')
+    #     else:
+    #         # For everything else, serve the index.html
+    #         if path.startswith('static/') or '.' in path:
+    #             # Serve static files directly (e.g., images, css, js)
+    #             return send_from_directory(app.static_folder, path)
+    #         else:
+    #             return send_from_directory(app.static_folder, 'index.html')
     
     with app.app_context():
         db.create_all()
