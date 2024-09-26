@@ -66,13 +66,21 @@ def create_app():
     app.register_blueprint(admin_blueprint, url_prefix='/')
 
 
-    # Catch-all route: Serve React's index.html for any other route (to handle React Router)
-    @app.route('/', defaults={'path': ''})
+    
+    # Serve React's static files from the build folder
+    @app.route('/')
     @app.route('/<path:path>')
-    def serve_react_app(path):
-        # If the path doesn't match an API route, return the React app
-        return send_from_directory(app.static_folder, 'index.html')
-
+    def serve_react(path=None):
+        if path is None or path == 'index.html':
+            return send_from_directory(app.static_folder, 'index.html')
+        else:
+            # For everything else, serve the index.html
+            if path.startswith('static/') or '.' in path:
+                # Serve static files directly (e.g., images, css, js)
+                return send_from_directory(app.static_folder, path)
+            else:
+                return send_from_directory(app.static_folder, 'index.html')
+    
     with app.app_context():
         db.create_all()
         
