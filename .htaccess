@@ -1,0 +1,9 @@
+RewriteEngine on
+# Exclude index.html itself from redirection
+RewriteCond %{REQUEST_URI} !^/index.html$
+
+# Exclude image, CSS, and JS files (add more file extensions if needed)
+RewriteCond %{REQUEST_URI} !\.(gif|jpe?g|png|css|js|svg|woff2|woff|ttf)$
+
+# Redirect all other requests to index.html
+RewriteRule .* /index.html [L]
