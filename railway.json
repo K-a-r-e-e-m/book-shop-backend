@@ -1,0 +1,12 @@
+{
+    "build": {
+      "command": "pip install -r requirements.txt",
+      "output": ""
+    },
+    "start": {
+      "command": "gunicorn --bind 0.0.0.0:8080 run_backend:app",
+      "port": 8080
+    },
+    "watchPaths": []
+  }
+  
